@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, take } from 'rxjs';
 
-const key = 'B529F431C06918D0F26398D14EDA71CC';
+const key = '1849D09E91A5D2F117D5409B18431663';
 const api = {
   vanityURL: 'ResolveVanityURL/v0001/',
   playerSummaries: 'GetPlayerSummaries/v0002/',
