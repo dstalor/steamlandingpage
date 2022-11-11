@@ -34,16 +34,18 @@ export class AppComponent {
     this.userName$.subscribe((name) => {
       this._userName = name;
       // if (!this._userId) {
-        this.http
-          .post<any>(
-            `https://dstalor.github.io/steamlandingpage-php/steamlink.php`,
-            { params: { name }, responseType: 'json' }
-          )
-          .pipe(take(1))
-          .subscribe((data) => {
-            console.log(data);
-            // this.userId$.next(data.response?.steamid);
-          });
+      this.http
+        .post<any>(`https://daniel.talor.me/steamlink.php`, {
+            interface: 'ISteamUser',
+            method: 'ResolveVanityURL',
+            version: 'v1',
+            vanityurl: name,
+        })
+        .pipe(take(1))
+        .subscribe((data) => {
+          console.log(data);
+          // this.userId$.next(data.response?.steamid);
+        });
       // }
     });
     // this.userId$.subscribe((id) => {
