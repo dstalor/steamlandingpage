@@ -11,7 +11,7 @@ const key = 'DAE8411586FA4F067901D996D587E20A';
 })
 export class AppComponent {
   title = 'steamlandingpage';
-  userName = '';
+  userName = 'genghisdani';
   userId = '';
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {}
@@ -25,12 +25,9 @@ export class AppComponent {
       if (!this.userId) {
         this.http
           .get<any>(
-            `http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/`,
+            `https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/`,
             {
-              params: {
-                key,
-                vanityurl: this.userName,
-              },
+              params: {key,vanityurl: this.userName},
             }
           )
           .subscribe((data) => {
