@@ -20,46 +20,49 @@ export class AppComponent {
   _userName = '';
   userId$ = new ReplaySubject<string>();
   _userId = '';
-  gameData = new ReplaySubject();
+  gameData = new ReplaySubject<any>();
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
-      console.log(params);
       this.userId$.next(params['id']);
       this.userName$.next(params['name']);
     });
 
     this.userName$.subscribe((name) => {
       this._userName = name;
-      // if (!this._userId) {
-      this.http
-        .post<any>(`https://daniel.talor.me/steamlink.php`, {
+      if (name) {
+        this.http
+          .post<any>('https://daniel.talor.me/steamlink.php', {
             interface: 'ISteamUser',
             method: 'ResolveVanityURL',
             version: 'v1',
             vanityurl: name,
-        })
-        .pipe(take(1))
-        .subscribe((data) => {
-          console.log(data);
-          // this.userId$.next(data.response?.steamid);
-        });
-      // }
+          })
+          .pipe(take(1))
+          .subscribe((data) => {
+            console.log(data);
+            this.userId$.next(data.response?.steamid);
+          });
+      }
     });
-    // this.userId$.subscribe((id) => {
-    //   this._userId = id;
-    //   this.http
-    //     .get<any>(
-    //       `//api.steampowered.com/ISteamUser/${api.playerSummaries}`,
-    //       { params: { key, steamids: id } }
-    //     )
-    //     .pipe(take(1))
-    //     .subscribe((data) => {
-    //       console.log(data);
-    //       this.gameData.next(data.response?.players[0]);
-    //     });
-    // });
+    this.userId$.subscribe((id) => {
+      this._userId = id;
+      if (id) {
+        this.http
+          .post<any>('https://daniel.talor.me/steamlink.php', {
+            interface: 'ISteamUser',
+            method: 'GetPlayerSummaries',
+            version: 'v2',
+            steamids: id,
+          })
+          .pipe(take(1))
+          .subscribe((data) => {
+            console.log(data);
+            this.gameData.next(data.response?.players[0]);
+          });
+      }
+    });
   }
 }

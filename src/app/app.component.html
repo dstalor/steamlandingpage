@@ -359,23 +359,37 @@
 </div>
 
 <div class="content" role="main">
-  <p>Welcome {{userName$ | async}}, id: {{userId$ | async}}!</p>
-  <ul>
-    <li><a href="https://www.google.com">Google</a></li>
-    <li><a href="https://en.wikipedia.org">Wikipedia (en)</a></li>
-    <li><a href="https://www.youtube.com">YouTube</a></li>
-    <li><a href="https://www.facebook.com/">Facebook</a></li>
-    <li><a href="https://www.messenger.com/">Facebook Messenger</a></li>
-    <li><a href="https://www.reddit.com">Reddit</a></li>
-  </ul>
-  <ul>
-    <li><a href="http://minecraft.gamepedia.com">Minecraft Wiki</a></li>
-    <li><a href="http://gta.wikia.com">GTA Wiki</a></li>
-    <li><a href="http://masseffect.wikia.com">Mass Effect Wiki</a></li>
-    <li><a href="http://terraria.gamepedia.com">Terraria Wiki</a></li>
-  </ul>
+  <h1>Welcome {{ userName$ | async }}, id: {{ userId$ | async }}!</h1>
+  <ng-container *ngIf="gameData | async as data">
+    <div *ngIf="data.gameid">
+      <h2>Currently playing: {{ data.gameextrainfo }}</h2>
+      <a
+        href="http://pcgamingwiki.com/api/appid.php?appid={{ data.gameid }}"
+        target="new"
+        >PCGamingWiki</a
+      ><br />
+      <a href="https://steamdb.info/app/{{ data.gameid }}" target="new"
+        >SteamDB</a
+      ><br />
+    </div>
+  </ng-container>
 
-
+  <div>
+    <ul>
+      <li><a href="https://www.google.com">Google</a></li>
+      <li><a href="https://en.wikipedia.org">Wikipedia (en)</a></li>
+      <li><a href="https://www.youtube.com">YouTube</a></li>
+      <li><a href="https://www.facebook.com/">Facebook</a></li>
+      <li><a href="https://www.messenger.com/">Facebook Messenger</a></li>
+      <li><a href="https://www.reddit.com">Reddit</a></li>
+    </ul>
+    <ul>
+      <li><a href="http://minecraft.gamepedia.com">Minecraft Wiki</a></li>
+      <li><a href="http://gta.wikia.com">GTA Wiki</a></li>
+      <li><a href="http://masseffect.wikia.com">Mass Effect Wiki</a></li>
+      <li><a href="http://terraria.gamepedia.com">Terraria Wiki</a></li>
+    </ul>
+  </div>
   <svg
     id="clouds"
     xmlns="http://www.w3.org/2000/svg"
@@ -392,14 +406,14 @@
       fill="#eee"
     />
   </svg>
+
+  <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+  <!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
+  <!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+  <!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+  <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+  <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
+  <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+  <router-outlet></router-outlet>
 </div>
-
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-<router-outlet></router-outlet>
