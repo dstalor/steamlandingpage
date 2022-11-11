@@ -1,8 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, take } from 'rxjs';
 
 const key = 'DAE8411586FA4F067901D996D587E20A';
+const api = {
+  vanityURL: 'ResolveVanityURL/v0001/',
+  playerSummaries: 'GetPlayerSummaries/v0002/',
+};
 
 @Component({
   selector: 'app-root',
@@ -11,31 +16,44 @@ const key = 'DAE8411586FA4F067901D996D587E20A';
 })
 export class AppComponent {
   title = 'steamlandingpage';
-  userName = 'genghisdani';
-  userId = '';
+  userName = new Subject<string>();
+  userId = new Subject<string>();
+  gameData = new Subject();
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       console.log(params);
-      this.userId = params['id'];
-      this.userName = params['name'];
+      this.userId.next(params['id']);
+      this.userName.next(params['name']);
 
-      if (!this.userId) {
+      if (!params['id']) {
         this.http
           .get<any>(
-            `https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/`,
-            {
-              params: {key,vanityurl: this.userName},
-            }
+            `https://api.steampowered.com/ISteamUser/${api.vanityURL}`,
+            { params: { key, vanityurl: params['name'] } }
           )
+          .pipe(take(1))
           .subscribe((data) => {
             console.log(data);
-
-            this.userId = data.response?.steamid;
+            this.userId.next(data.response?.steamid);
           });
       }
     });
+
+    this.userId.subscribe((id) => {
+      this.http
+      .get<any>(
+        `https://api.steampowered.com/ISteamUser/${api.playerSummaries}`,
+        { params: { key, steamids: id } }
+      )
+      .pipe(take(1))
+      .subscribe((data) => {
+        console.log(data);
+        this.gameData.next(data.response?.players[0]);
+      });
+
+    })
   }
 }

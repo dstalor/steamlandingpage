@@ -359,7 +359,7 @@
 </div>
 
 <div class="content" role="main">
-  <p>Welcome {{userName}}, id: {{userId}}!</p>
+  <p>Welcome {{userName | async}}, id: {{userId | async}}!</p>
   <ul>
     <li><a href="https://www.google.com">Google</a></li>
     <li><a href="https://en.wikipedia.org">Wikipedia (en)</a></li>
