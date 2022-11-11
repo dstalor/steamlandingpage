@@ -33,31 +33,31 @@ export class AppComponent {
 
     this.userName$.subscribe((name) => {
       this._userName = name;
-      if (!this._userId) {
+      // if (!this._userId) {
         this.http
-          .get<any>(
-            `//api.steampowered.com/ISteamUser/${api.vanityURL}`,
-            { params: { key, vanityurl: name } }
+          .post<any>(
+            `https://dstalor.github.io/steamlandingpage-php/steamlink.php`,
+            { params: { name }, responseType: 'json' }
           )
           .pipe(take(1))
           .subscribe((data) => {
             console.log(data);
-            this.userId$.next(data.response?.steamid);
+            // this.userId$.next(data.response?.steamid);
           });
-      }
+      // }
     });
-    this.userId$.subscribe((id) => {
-      this._userId = id;
-      this.http
-        .get<any>(
-          `//api.steampowered.com/ISteamUser/${api.playerSummaries}`,
-          { params: { key, steamids: id } }
-        )
-        .pipe(take(1))
-        .subscribe((data) => {
-          console.log(data);
-          this.gameData.next(data.response?.players[0]);
-        });
-    });
+    // this.userId$.subscribe((id) => {
+    //   this._userId = id;
+    //   this.http
+    //     .get<any>(
+    //       `//api.steampowered.com/ISteamUser/${api.playerSummaries}`,
+    //       { params: { key, steamids: id } }
+    //     )
+    //     .pipe(take(1))
+    //     .subscribe((data) => {
+    //       console.log(data);
+    //       this.gameData.next(data.response?.players[0]);
+    //     });
+    // });
   }
 }
