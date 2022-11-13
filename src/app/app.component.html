@@ -41,9 +41,7 @@
         <mat-card-subtitle
           >Time Played | Last 2 weeks:
           {{ game.playtime_2weeks / 60 | number: "1.0-1" }} hrs; Total:
-          {{
-            game.playtime_forever / 60 | number: "1.0-1"
-          }}
+          {{ game.playtime_forever / 60 | number: "1.0-1" }}
           hrs</mat-card-subtitle
         >
       </mat-card-header>
@@ -60,13 +58,13 @@
             href="http://pcgamingwiki.com/api/appid.php?appid={{
               player.gameid
             }}"
-            target="new"
+            target="_blank"
             >PCGamingWiki</a
           ><br />
           <a
             mat-list-item
             href="https://steamdb.info/app/{{ player.gameid }}"
-            target="new"
+            target="_blank"
             >SteamDB</a
           >
         </mat-nav-list>
@@ -77,7 +75,7 @@
     class="search-bar"
     action="//www.google.com/search"
     method="get"
-    target="new"
+    target="_blank"
     ngNoForm
   >
     <input
@@ -110,27 +108,27 @@
     </mat-form-field>
   </form>
   <mat-nav-list>
-    <a mat-list-item target="new" href="https://www.google.com">Google</a>
-    <a mat-list-item target="new" href="https://en.wikipedia.org"
+    <a mat-list-item target="_blank" href="https://www.google.com">Google</a>
+    <a mat-list-item target="_blank" href="https://en.wikipedia.org"
       >Wikipedia (en)</a
     >
-    <a mat-list-item target="new" href="https://www.youtube.com">YouTube</a>
-    <a mat-list-item target="new" href="https://www.facebook.com/"
+    <a mat-list-item target="_blank" href="https://www.youtube.com">YouTube</a>
+    <a mat-list-item target="_blank" href="https://www.facebook.com/"
       >Facebook</a
     >
-    <a mat-list-item target="new" href="https://www.messenger.com/"
+    <a mat-list-item target="_blank" href="https://www.messenger.com/"
       >Facebook Messenger</a
     >
-    <a mat-list-item target="new" href="https://www.reddit.com">Reddit</a>
+    <a mat-list-item target="_blank" href="https://www.reddit.com">Reddit</a>
     <mat-divider></mat-divider>
-    <a mat-list-item target="new" href="http://minecraft.gamepedia.com"
+    <a mat-list-item target="_blank" href="http://minecraft.gamepedia.com"
       >Minecraft Wiki</a
     >
-    <a mat-list-item target="new" href="http://gta.wikia.com">GTA Wiki</a>
-    <a mat-list-item target="new" href="http://masseffect.wikia.com"
+    <a mat-list-item target="_blank" href="http://gta.wikia.com">GTA Wiki</a>
+    <a mat-list-item target="_blank" href="http://masseffect.wikia.com"
       >Mass Effect Wiki</a
     >
-    <a mat-list-item target="new" href="http://terraria.gamepedia.com"
+    <a mat-list-item target="_blank" href="http://terraria.gamepedia.com"
       >Terraria Wiki</a
     >
   </mat-nav-list>
