@@ -3,62 +3,76 @@
 </mat-toolbar>
 
 <div role="main" *ngIf="player$ | async as player">
-  <mat-card>
-    <mat-card-header>
-      <img mat-card-avatar [src]="player.avatarfull" />
-      <mat-card-title>{{ player.personaname }}</mat-card-title>
-      <mat-card-subtitle> {{ player.steamid }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <dl>
-        <ng-container *ngIf="player.realname">
-          <dt>Real Name:</dt>
-          <dd>{{ player.realname }}</dd>
-        </ng-container>
-        <ng-container *ngIf="player.lastlogoff">
-          <dt>Last log-off:</dt>
-          <dd>{{ (player.lastlogoff || 0) * 1000 | date: "medium" }}</dd>
-        </ng-container>
-        <ng-container *ngIf="player.timecreated">
-          <dt>Time Created:</dt>
-          <dd>{{ (player.timecreated || 0) * 1000 | date: "medium" }}</dd>
-        </ng-container>
-      </dl>
-    </mat-card-content>
-  </mat-card>
-  <mat-card *ngIf="player.gameid">
-    <mat-card-header>
+  <div class="cards">
+    <mat-card>
+      <mat-card-header>
+        <img mat-card-avatar [src]="player.avatarfull" />
+        <mat-card-title>{{ player.personaname }}</mat-card-title>
+        <mat-card-subtitle> {{ player.steamid }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <dl>
+          <ng-container *ngIf="player.realname">
+            <dt>Real Name:</dt>
+            <dd>{{ player.realname }}</dd>
+          </ng-container>
+          <ng-container *ngIf="player.lastlogoff">
+            <dt>Last log-off:</dt>
+            <dd>{{ (player.lastlogoff || 0) * 1000 | date: "medium" }}</dd>
+          </ng-container>
+          <ng-container *ngIf="player.timecreated">
+            <dt>Time Created:</dt>
+            <dd>{{ (player.timecreated || 0) * 1000 | date: "medium" }}</dd>
+          </ng-container>
+        </dl>
+      </mat-card-content>
+    </mat-card>
+    <mat-card *ngIf="player.gameid">
+      <mat-card-header *ngIf="game$ | async as game">
+        <img
+          mat-card-avatar
+          src="https://avatars.akamai.steamstatic.com/{{
+            game.img_icon_url
+          }}.jpg"
+        />
+        <mat-card-title
+          >Currently playing: {{ player.gameextrainfo }}</mat-card-title
+        >
+        <mat-card-subtitle
+          >Time Played | Last 2 weeks:
+          {{ game.playtime_2weeks / 60 | number: "1.0-1" }} hrs; Total:
+          {{
+            game.playtime_forever / 60 | number: "1.0-1"
+          }}
+          hrs</mat-card-subtitle
+        >
+      </mat-card-header>
       <img
-        *ngIf="game$ | async as game"
-        mat-card-avatar
-        src="https://avatars.akamai.steamstatic.com/{{ game.img_icon_url }}.jpg"
+        mat-card-image
+        src="https://cdn.cloudflare.steamstatic.com/steam/apps/{{
+          player.gameid
+        }}/header.jpg"
       />
-      <mat-card-title
-        >Currently playing: {{ player.gameextrainfo }}</mat-card-title
-      >
-    </mat-card-header>
-    <img
-      mat-card-image
-      src="https://cdn.cloudflare.steamstatic.com/steam/apps/{{
-        player.gameid
-      }}/header.jpg"
-    />
-
-    <mat-nav-list>
-      <a
-        mat-list-item
-        href="http://pcgamingwiki.com/api/appid.php?appid={{ player.gameid }}"
-        target="_blank"
-        >PCGamingWiki</a
-      ><br />
-      <a
-        mat-list-item
-        href="https://steamdb.info/app/{{ player.gameid }}"
-        target="_blank"
-        >SteamDB</a
-      >
-    </mat-nav-list>
-  </mat-card>
+      <mat-card-content>
+        <mat-nav-list>
+          <a
+            mat-list-item
+            href="http://pcgamingwiki.com/api/appid.php?appid={{
+              player.gameid
+            }}"
+            target="_blank"
+            >PCGamingWiki</a
+          ><br />
+          <a
+            mat-list-item
+            href="https://steamdb.info/app/{{ player.gameid }}"
+            target="_blank"
+            >SteamDB</a
+          >
+        </mat-nav-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
   <form
     class="search-bar"
     action="//www.google.com/search"
@@ -71,19 +85,22 @@
       name="q"
       value="&quot;{{ searchPrefix }}&quot; {{ searchText }}"
     />
-    <mat-form-field *ngIf="player.gameextrainfo">
-      <mat-select
-        [(ngModel)]="searchPrefix"
-        [ngModelOptions]="{ standalone: true }"
-      >
-        <mat-option value=""></mat-option>
-        <mat-option [value]="player.gameextrainfo">{{
-          player.gameextrainfo
-        }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    &nbsp;
+    <ng-container *ngIf="player.gameextrainfo">
+      <mat-form-field>
+        <mat-select
+          [(ngModel)]="searchPrefix"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <mat-option value=""></mat-option>
+          <mat-option [value]="player.gameextrainfo">{{
+            player.gameextrainfo
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      &nbsp;
+    </ng-container>
     <mat-form-field>
+      <mat-label>Search term</mat-label>
       <input
         [ngModelOptions]="{ standalone: true }"
         type="text"
