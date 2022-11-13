@@ -58,13 +58,9 @@
             href="http://pcgamingwiki.com/api/appid.php?appid={{
               player.gameid
             }}"
-            target="_blank"
             >PCGamingWiki</a
           ><br />
-          <a
-            mat-list-item
-            href="https://steamdb.info/app/{{ player.gameid }}"
-            target="_blank"
+          <a mat-list-item href="https://steamdb.info/app/{{ player.gameid }}"
             >SteamDB</a
           >
         </mat-nav-list>
@@ -75,7 +71,6 @@
     class="search-bar"
     action="//www.google.com/search"
     method="get"
-    target="_blank"
     ngNoForm
   >
     <input
@@ -108,29 +103,17 @@
     </mat-form-field>
   </form>
   <mat-nav-list>
-    <a mat-list-item target="_blank" href="https://www.google.com">Google</a>
-    <a mat-list-item target="_blank" href="https://en.wikipedia.org"
-      >Wikipedia (en)</a
-    >
-    <a mat-list-item target="_blank" href="https://www.youtube.com">YouTube</a>
-    <a mat-list-item target="_blank" href="https://www.facebook.com/"
-      >Facebook</a
-    >
-    <a mat-list-item target="_blank" href="https://www.messenger.com/"
-      >Facebook Messenger</a
-    >
-    <a mat-list-item target="_blank" href="https://www.reddit.com">Reddit</a>
+    <a mat-list-item href="https://www.google.com">Google</a>
+    <a mat-list-item href="https://en.wikipedia.org">Wikipedia (en)</a>
+    <a mat-list-item href="https://www.youtube.com">YouTube</a>
+    <a mat-list-item href="https://www.facebook.com/">Facebook</a>
+    <a mat-list-item href="https://www.messenger.com/">Facebook Messenger</a>
+    <a mat-list-item href="https://www.reddit.com">Reddit</a>
     <mat-divider></mat-divider>
-    <a mat-list-item target="_blank" href="http://minecraft.gamepedia.com"
-      >Minecraft Wiki</a
-    >
-    <a mat-list-item target="_blank" href="http://gta.wikia.com">GTA Wiki</a>
-    <a mat-list-item target="_blank" href="http://masseffect.wikia.com"
-      >Mass Effect Wiki</a
-    >
-    <a mat-list-item target="_blank" href="http://terraria.gamepedia.com"
-      >Terraria Wiki</a
-    >
+    <a mat-list-item href="http://minecraft.gamepedia.com">Minecraft Wiki</a>
+    <a mat-list-item href="http://gta.wikia.com">GTA Wiki</a>
+    <a mat-list-item href="http://masseffect.wikia.com">Mass Effect Wiki</a>
+    <a mat-list-item href="http://terraria.gamepedia.com">Terraria Wiki</a>
   </mat-nav-list>
   <router-outlet></router-outlet>
 </div>
