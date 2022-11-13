@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:gh-pages": "ng build --output-path _site",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
